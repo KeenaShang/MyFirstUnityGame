@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using Unity.LEGO.Behaviours.Actions;
+using Unity.LEGO.Minifig;
 
 namespace Unity.LEGO.Behaviours.Triggers
 {
@@ -70,6 +71,28 @@ namespace Unity.LEGO.Behaviours.Triggers
                     {
                         pickupAction.OnCollected += PickupCollected;
                         validPickupActions++;
+                    }
+
+                    if (validPickupActions == 1)
+                    {
+                        //Find the minifig
+                        var minifigController = FindObjectOfType<MinifigController>();
+
+                        if (minifigController)
+                        {
+                            //Disable player input to the Minifig so that its animation won't be interrupted
+                            minifigController.SetInputEnabled(false);
+
+                            //Play the Minifig animation
+                            minifigController.PlaySpecialAnimation(MinifigController.SpecialAnimation.Ballerina, null, EnableMinifigInput);
+
+                            //Re-enable player input to the Minifig
+
+                            void EnableMinifigInput(bool b)
+                            {
+                                minifigController.SetInputEnabled(true);
+                            }
+                        }
                     }
                 }
 
