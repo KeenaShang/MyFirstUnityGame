@@ -151,24 +151,26 @@ namespace Unity.LEGO.Behaviours.Actions
                     // Check if picked up.
                     if (m_ActiveColliders.Count > 0)
                     {
-                        //Find the minifig
-                        var minifigController = FindObjectOfType<MinifigController>();
-
-                        if (minifigController)
+                        if (m_ActiveColliders.Count == 1)
                         {
-                            //Disable player input to the Minifig so that its animation won't be interrupted
-                            minifigController.SetInputEnabled(false);
+                            //Find the minifig
+                            var minifigController = FindObjectOfType<MinifigController>();
 
-                            //Play the Minifig animation
-                            minifigController.PlaySpecialAnimation(MinifigController.SpecialAnimation.Ballerina, null, EnableMinifigInput);
-
-                            //Re-enable player input to the Minifig
-
-                            void EnableMinifigInput(bool b)
+                            if (minifigController)
                             {
-                                minifigController.SetInputEnabled(true);
-                            }
+                                //Disable player input to the Minifig so that its animation won't be interrupted
+                                minifigController.SetInputEnabled(false);
 
+                                //Play the Minifig animation
+                                minifigController.PlaySpecialAnimation(MinifigController.SpecialAnimation.Ballerina, null, EnableMinifigInput);
+
+                                //Re-enable player input to the Minifig
+
+                                void EnableMinifigInput(bool b)
+                                {
+                                    minifigController.SetInputEnabled(true);
+                                }
+                            }
                         }
 
                         // Particle burst.
